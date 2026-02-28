@@ -25,6 +25,7 @@ function App() {
     updateTermCurrency,
     deleteTerm,
     resetCurrentTerm,
+    endCurrentTerm,
     deleteExpense,
     addCategory,
     deleteCategory,
@@ -51,7 +52,7 @@ function App() {
   const isInitialSetup = !activeTerm && !showTermSetup && terms.length === 0;
 
   return (
-    <div className="min-h-screen bg-transparent flex flex-col font-sans text-zinc-100">
+    <div className="min-h-screen bg-transparent flex flex-col font-sans text-zinc-100 overflow-x-hidden relative">
       <Header
         activeTerm={activeTerm}
         globalCurrency={globalCurrency}
@@ -60,6 +61,7 @@ function App() {
         onManageTerms={() => setShowTermManager(true)}
         onManageCategories={() => setShowCategoryManager(true)}
         onOpenPastBudgets={() => setShowPastBudgets(true)}
+        onEndTerm={endCurrentTerm}
       />
 
       <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 animate-fade-in relative z-0">

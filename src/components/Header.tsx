@@ -11,6 +11,7 @@ interface HeaderProps {
     onManageTerms: () => void;
     onManageCategories: () => void;
     onOpenPastBudgets: () => void;
+    onEndTerm: () => void;
 }
 
 export function Header({
@@ -20,14 +21,15 @@ export function Header({
     onStartNew,
     onManageTerms,
     onManageCategories,
-    onOpenPastBudgets
+    onOpenPastBudgets,
+    onEndTerm
 }: HeaderProps) {
     return (
-        <header className="bg-surface/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5 sticky top-0 z-40 py-5 px-4 sm:px-6 transition-all">
-            <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+        <header className="bg-surface/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5 sticky top-0 z-40 py-4 px-4 sm:px-6 shrink-0 w-full overflow-hidden block">
+            <div className="max-w-6xl mx-auto flex flex-row flex-nowrap justify-between items-center gap-4 w-full h-[40px]">
 
                 {/* Logo / App Name */}
-                <div className="flex items-center gap-3 text-primary group cursor-pointer hover:opacity-90 transition-opacity">
+                <div className="flex flex-row items-center gap-3 text-primary group cursor-pointer hover:opacity-90 transition-opacity whitespace-nowrap shrink-0">
                     <div className="bg-primary/10 p-2 rounded-xl border border-primary/20 shadow-[0_0_15px_rgba(79,140,255,0.15)]">
                         <Wallet className="w-6 h-6 text-primary" />
                     </div>
@@ -37,7 +39,7 @@ export function Header({
                 </div>
 
                 {/* Active Term Display & Actions */}
-                <div className="flex flex-wrap items-center justify-end gap-3 flex-1">
+                <div className="flex flex-row flex-nowrap items-center justify-end gap-3 flex-1 overflow-visible">
 
                     {/* Top Right Utilities (Currency & Past Budgets) */}
                     <div className="flex items-center gap-2 border-r border-white/10 pr-3 mr-1">
@@ -56,13 +58,22 @@ export function Header({
                     </div>
 
                     {activeTerm ? (
-                        <div className="flex items-center gap-3">
-                            <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary-light rounded-full text-sm font-medium border border-primary/20 shadow-[0_0_15px_rgba(79,140,255,0.1)]">
+                        <div className="flex flex-row items-center gap-3 overflow-visible whitespace-nowrap">
+                            <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary-light rounded-full text-sm font-medium border border-primary/20 shadow-[0_0_15px_rgba(79,140,255,0.1)] whitespace-nowrap">
                                 <Calendar className="w-4 h-4" />
                                 <span>
                                     {formatDateDisplay(activeTerm.startDate)} – {formatDateDisplay(activeTerm.endDate)}
                                 </span>
                             </div>
+
+                            <button
+                                onClick={onEndTerm}
+                                className="flex items-center gap-2 px-3 py-2 bg-negative/10 border border-negative/20 text-negative hover:bg-negative hover:text-white rounded-xl transition-all duration-300 active:scale-95 group text-sm font-bold shadow-inner"
+                                title="End active term immediately"
+                            >
+                                <History className="w-4 h-4" />
+                                <span className="hidden md:inline">End Month</span>
+                            </button>
 
                             <div className="flex items-center gap-1 border-r border-white/10 pr-3 mr-1">
                                 <button

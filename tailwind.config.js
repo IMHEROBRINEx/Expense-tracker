@@ -11,24 +11,28 @@ export default {
       },
       colors: {
         primary: {
-          DEFAULT: '#4F8CFF',
-          dark: '#3A68C9',
-          light: '#7AA9FF',
-          glow: 'rgba(79, 140, 255, 0.25)',
+          DEFAULT: '#3b82f6', // Bright Blue
+          dark: '#2563eb',
+          light: '#60a5fa',
+          glow: 'rgba(59, 130, 246, 0.3)',
         },
         positive: {
-          DEFAULT: '#22C55E',
-          glow: 'rgba(34, 197, 94, 0.2)',
+          DEFAULT: '#10b981', // Emerald
+          glow: 'rgba(16, 185, 129, 0.3)',
         },
         negative: {
-          DEFAULT: '#EF4444',
-          glow: 'rgba(239, 68, 68, 0.2)',
+          DEFAULT: '#f43f5e', // Rose
+          glow: 'rgba(244, 63, 94, 0.3)',
         },
-        background: '#0F1115',
+        background: '#0B0D11', // Darker background
         surface: {
-          DEFAULT: '#1A1D24', // Secondary Background
-          card: '#1E222B', // Card Background
+          DEFAULT: '#13161C', // Secondary Background
+          card: '#181B23', // Card Background
         },
+      },
+      boxShadow: {
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.4)',
+        'glass-hover': '0 8px 32px 0 rgba(0, 0, 0, 0.6)',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-out',

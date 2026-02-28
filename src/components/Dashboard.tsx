@@ -113,10 +113,12 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
             </div>
 
             {/* Smart Insights */}
-            <div className="glass-card bg-primary/5 hover:bg-primary/10 border-primary/20 p-6 transition-colors duration-300">
+            <div className="glass-card bg-gradient-to-br from-primary/10 to-transparent border-primary/20 p-6 transition-colors duration-300">
                 <h3 className="font-semibold text-primary-light mb-4 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4 text-primary" />
-                    Insights
+                    <div className="p-1.5 bg-primary/20 rounded-lg shadow-[0_0_10px_rgba(79,140,255,0.2)] border border-primary/30">
+                        <Lightbulb className="w-5 h-5 text-primary-light" />
+                    </div>
+                    Smart Insights
                 </h3>
                 <ul className="space-y-3">
                     {insights.map((insight, idx) => (
