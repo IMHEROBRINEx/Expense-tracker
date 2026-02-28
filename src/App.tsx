@@ -37,7 +37,7 @@ function App() {
   const isInitialSetup = !activeTerm && !showTermSetup && terms.length === 0;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent flex flex-col font-sans text-zinc-100">
       <Header
         activeTerm={activeTerm}
         onStartNew={() => setShowTermSetup(true)}
@@ -45,13 +45,15 @@ function App() {
         onManageCategories={() => setShowCategoryManager(true)}
       />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 animate-fade-in relative z-0">
         {isInitialSetup || showTermSetup ? (
-          <TermSetup
-            onStart={handleStartNewTerm}
-            onCancel={activeTerm ? () => setShowTermSetup(false) : undefined}
-            isInitial={isInitialSetup}
-          />
+          <div className="animate-slide-up">
+            <TermSetup
+              onStart={handleStartNewTerm}
+              onCancel={activeTerm ? () => setShowTermSetup(false) : undefined}
+              isInitial={isInitialSetup}
+            />
+          </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
