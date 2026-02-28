@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { PaymentType } from '../types';
 import { useExpenseTracker } from '../hooks/useExpenseTracker';
-import { Plus, Tag, Calendar as CalendarIcon, DollarSign, FileText } from 'lucide-react';
+import { SUPPORTED_CURRENCIES } from '../utils/currencyUtils';
+import { Plus, Tag, Calendar as CalendarIcon, FileText } from 'lucide-react';
 
 interface ExpenseFormProps {
     onSuccess?: () => void;
@@ -47,6 +48,8 @@ export function ExpenseForm({ onSuccess }: ExpenseFormProps) {
 
     if (!activeTerm) return null;
 
+    const activeSymbol = SUPPORTED_CURRENCIES[activeTerm.currency]?.symbol || '$';
+
     return (
         <div className="glass-card hover:border-white/10 transition-colors duration-300 overflow-hidden">
             <div className="px-6 py-5 border-b border-white/5 bg-surface/30 flex items-center gap-3">
@@ -64,8 +67,8 @@ export function ExpenseForm({ onSuccess }: ExpenseFormProps) {
                             Amount
                         </label>
                         <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                <DollarSign className="w-5 h-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-primary transition-colors font-bold text-lg">
+                                {activeSymbol}
                             </div>
                             <input
                                 type="number"

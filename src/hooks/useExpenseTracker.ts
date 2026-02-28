@@ -12,6 +12,7 @@ const DEFAULT_CATEGORIES: Category[] = [
 ];
 
 export function useExpenseTracker() {
+    const [globalCurrency, setGlobalCurrency] = useLocalStorage<string>('et_global_currency', 'USD');
     const [terms, setTerms] = useLocalStorage<Term[]>('et_terms', []);
     const [activeTermId, setActiveTermId] = useLocalStorage<string | null>('et_active_term', null);
     const [expenses, setExpenses] = useLocalStorage<Expense[]>('et_expenses', []);
@@ -28,6 +29,7 @@ export function useExpenseTracker() {
             startDate,
             endDate,
             budget,
+            currency: globalCurrency // Inherit from global preference at start
         };
 
         // Sort terms by start date descending
@@ -41,6 +43,10 @@ export function useExpenseTracker() {
 
     const updateTermBudget = (termId: string, budget: number) => {
         setTerms(terms.map((t) => t.id === termId ? { ...t, budget } : t));
+    };
+
+    const updateTermCurrency = (termId: string, currency: string) => {
+        setTerms(terms.map((t) => t.id === termId ? { ...t, currency } : t));
     };
 
     const deleteTerm = (termId: string) => {
@@ -98,6 +104,7 @@ export function useExpenseTracker() {
 
     return {
         // State
+        globalCurrency,
         terms,
         activeTermId,
         activeTerm,
@@ -105,9 +112,11 @@ export function useExpenseTracker() {
         activeTermExpenses,
         categories,
         // Actions
+        setGlobalCurrency,
         setActiveTermId,
         startNewTerm,
         updateTermBudget,
+        updateTermCurrency,
         deleteTerm,
         addExpense,
         updateExpense,

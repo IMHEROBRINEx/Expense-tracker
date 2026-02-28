@@ -3,6 +3,7 @@ import type { Term, Expense, Category } from '../types';
 import { generateInsights } from '../utils/insightGenerator';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, PieChart as PieChartIcon, Lightbulb } from 'lucide-react';
+import { formatCurrency } from '../utils/currencyUtils';
 
 interface DashboardProps {
     term: Term;
@@ -51,7 +52,7 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
             return (
                 <div className="bg-surface-card border border-white/10 p-3 rounded-lg shadow-xl backdrop-blur-md">
                     <p className="text-white font-medium">{payload[0].name}</p>
-                    <p className="text-primary-light font-bold">${Number(payload[0].value).toFixed(2)}</p>
+                    <p className="text-primary-light font-bold">{formatCurrency(payload[0].value, term.currency)}</p>
                 </div>
             );
         }
@@ -95,7 +96,7 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
 
                 <div className="relative z-10">
                     <div className="flex justify-between text-sm font-medium mb-3">
-                        <span className="text-zinc-400">Total Spent <span className="text-white ml-2">${totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></span>
+                        <span className="text-zinc-400">Total Spent <span className="text-white ml-2">{formatCurrency(totalSpent, term.currency)}</span></span>
                         <span className={isOverspent ? 'text-negative font-bold' : 'text-zinc-300 font-bold'}>{percentUsed.toFixed(1)}%</span>
                     </div>
                     <div className="w-full bg-surface-card border border-white/5 rounded-full h-3.5 overflow-hidden shadow-inner relative">
@@ -176,7 +177,7 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
                         <div className="space-y-5">
                             <div>
                                 <div className="flex justify-between text-sm font-medium mb-2">
-                                    <span className="text-zinc-300">Cash <span className="text-white ml-2">${paymentData.cash.toFixed(2)}</span></span>
+                                    <span className="text-zinc-300">Cash <span className="text-white ml-2">{formatCurrency(paymentData.cash, term.currency)}</span></span>
                                     <span className="text-positive font-bold">{paymentData.cashP.toFixed(1)}%</span>
                                 </div>
                                 <div className="w-full bg-surface-card border border-white/5 rounded-full h-2.5 overflow-hidden">
@@ -185,7 +186,7 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
                             </div>
                             <div>
                                 <div className="flex justify-between text-sm font-medium mb-2">
-                                    <span className="text-zinc-300">Non-Cash <span className="text-white ml-2">${paymentData.nonCash.toFixed(2)}</span></span>
+                                    <span className="text-zinc-300">Non-Cash <span className="text-white ml-2">{formatCurrency(paymentData.nonCash, term.currency)}</span></span>
                                     <span className="text-primary-light font-bold">{paymentData.nonCashP.toFixed(1)}%</span>
                                 </div>
                                 <div className="w-full bg-surface-card border border-white/5 rounded-full h-2.5 overflow-hidden">

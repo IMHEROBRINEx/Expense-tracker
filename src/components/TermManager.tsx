@@ -1,5 +1,6 @@
 import type { Term } from '../types';
 import { formatDateDisplay } from '../utils/dateUtils';
+import { formatCurrency } from '../utils/currencyUtils';
 import { Settings, Trash2, X, RefreshCw, CheckCircle2 } from 'lucide-react';
 
 interface TermManagerProps {
@@ -79,7 +80,7 @@ export function TermManager({
                                             )}
                                         </div>
                                         <div className="text-xs text-zinc-400 font-medium">
-                                            Budget: <span className="text-zinc-200">${term.budget.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                                            Budget: <span className="text-zinc-200">{formatCurrency(term.budget, term.currency)}</span>
                                         </div>
                                     </div>
 

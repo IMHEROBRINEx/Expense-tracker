@@ -4,9 +4,10 @@ interface TermSetupProps {
     onStart: (startDate: string, budget: number) => void;
     onCancel?: () => void;
     isInitial?: boolean;
+    activeCurrencySymbol?: string;
 }
 
-export function TermSetup({ onStart, onCancel, isInitial = false }: TermSetupProps) {
+export function TermSetup({ onStart, onCancel, isInitial = false, activeCurrencySymbol = '$' }: TermSetupProps) {
     // Default to today's date
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
     const [budget, setBudget] = useState('');
@@ -49,10 +50,10 @@ export function TermSetup({ onStart, onCancel, isInitial = false }: TermSetupPro
 
                 <div>
                     <label className="block text-sm font-medium text-zinc-300 mb-2">
-                        Monthly Budget ($)
+                        Monthly Budget
                     </label>
                     <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 font-medium">$</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 font-medium">{activeCurrencySymbol}</span>
                         <input
                             type="number"
                             required

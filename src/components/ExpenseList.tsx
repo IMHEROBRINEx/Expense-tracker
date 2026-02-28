@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import type { Expense, Category } from '../types';
 import { formatDateDisplay } from '../utils/dateUtils';
+import { formatCurrency } from '../utils/currencyUtils';
 import { Trash2, Wallet, CreditCard, ChevronDown } from 'lucide-react';
 
 interface ExpenseListProps {
     expenses: Expense[];
     categories: Category[];
+    activeCurrency: string;
     onDelete: (id: string) => void;
 }
 
-export function ExpenseList({ expenses, categories, onDelete }: ExpenseListProps) {
+export function ExpenseList({ expenses, categories, activeCurrency, onDelete }: ExpenseListProps) {
     const [expandedId, setExpandedId] = useState<string | null>(null);
 
     if (expenses.length === 0) {
@@ -70,7 +72,7 @@ export function ExpenseList({ expenses, categories, onDelete }: ExpenseListProps
                                 <div className="flex items-center gap-5">
                                     <div className="text-right">
                                         <span className="font-bold text-white block text-lg tracking-tight">
-                                            ${expense.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                            {formatCurrency(expense.amount, activeCurrency)}
                                         </span>
                                     </div>
                                     <div className={`text-zinc-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
