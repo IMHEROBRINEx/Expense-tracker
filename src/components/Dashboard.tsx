@@ -79,7 +79,7 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
                     <div className="bg-surface/50 border border-white/5 p-4 rounded-xl hover:bg-surface/80 transition-colors">
                         <div className="text-xs text-zinc-400 font-medium uppercase tracking-wider mb-2">Total Budget</div>
                         <div className="text-2xl font-bold text-white tracking-tight">
-                            ${totalBudget.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            {formatCurrency(totalBudget, term.currency)}
                         </div>
                     </div>
 
@@ -88,7 +88,7 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
                             Remaining
                         </div>
                         <div className="text-2xl font-bold tracking-tight flex items-center gap-2">
-                            ${Math.abs(remaining).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            {formatCurrency(Math.abs(remaining), term.currency)}
                             {isOverspent ? <TrendingDown className="w-5 h-5" /> : <TrendingUp className="w-5 h-5" />}
                         </div>
                     </div>

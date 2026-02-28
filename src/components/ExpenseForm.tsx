@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import type { PaymentType } from '../types';
-import { useExpenseTracker } from '../hooks/useExpenseTracker';
+import type { PaymentType, Category, Term, Expense } from '../types';
 import { SUPPORTED_CURRENCIES } from '../utils/currencyUtils';
 import { Plus, Tag, Calendar as CalendarIcon, FileText } from 'lucide-react';
 
 interface ExpenseFormProps {
+    categories: Category[];
+    activeTerm: Term | null;
+    onAddExpense: (data: Omit<Expense, 'id' | 'termId'>) => void;
     onSuccess?: () => void;
 }
 
-export function ExpenseForm({ onSuccess }: ExpenseFormProps) {
-    const { addExpense, categories, activeTerm } = useExpenseTracker();
+export function ExpenseForm({ categories, activeTerm, onAddExpense, onSuccess }: ExpenseFormProps) {
 
     const [amount, setAmount] = useState('');
     const [categoryId, setCategoryId] = useState(categories[0]?.id || '');
@@ -32,7 +33,7 @@ export function ExpenseForm({ onSuccess }: ExpenseFormProps) {
             return;
         }
 
-        addExpense({
+        onAddExpense({
             amount: parseFloat(amount),
             categoryId,
             type,

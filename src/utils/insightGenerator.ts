@@ -1,4 +1,5 @@
 import type { Expense, Category, Term } from '../types';
+import { formatCurrency } from './currencyUtils';
 
 export function generateInsights(term: Term, expenses: Expense[], categories: Category[]): string[] {
     const insights: string[] = [];
@@ -26,7 +27,7 @@ export function generateInsights(term: Term, expenses: Expense[], categories: Ca
     if (sortedCats.length > 0) {
         const topCatId = sortedCats[0][0];
         const topCatName = categories.find(c => c.id === topCatId)?.name || 'Unknown';
-        insights.push(`📊 Most spending was in ${topCatName} ($${sortedCats[0][1].toLocaleString(undefined, { minimumFractionDigits: 2 })}).`);
+        insights.push(`📊 Most spending was in ${topCatName} (${formatCurrency(sortedCats[0][1], term.currency)}).`);
     }
 
     const nonCashSum = expenses.filter(e => e.type === 'non-cash').reduce((sum, e) => sum + e.amount, 0);
@@ -51,7 +52,7 @@ export function generateInsights(term: Term, expenses: Expense[], categories: Ca
             const dailyRate = totalSpent / daysPassed;
             const projectedTotal = dailyRate * totalDays;
             if (projectedTotal > term.budget) {
-                insights.push(`📈 At your current spending rate ($${dailyRate.toFixed(0)}/day), you may exceed your budget by end of term.`);
+                insights.push(`📈 At your current spending rate (${formatCurrency(dailyRate, term.currency)}/day), you may exceed your budget by end of term.`);
             }
         }
     }

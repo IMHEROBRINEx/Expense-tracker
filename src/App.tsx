@@ -27,6 +27,7 @@ function App() {
     resetCurrentTerm,
     endCurrentTerm,
     deleteExpense,
+    addExpense,
     addCategory,
     deleteCategory,
     updateCategory
@@ -77,7 +78,11 @@ function App() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
-              <ExpenseForm />
+              <ExpenseForm
+                categories={categories}
+                activeTerm={activeTerm}
+                onAddExpense={addExpense}
+              />
               <ExpenseList
                 expenses={activeTermExpenses}
                 categories={categories}
