@@ -75,10 +75,10 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
                     Budget Overview
                 </h3>
 
-                <div className="grid grid-cols-2 gap-4 mb-7 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-7 relative z-10">
                     <div className="bg-surface/50 border border-white/5 p-4 rounded-xl hover:bg-surface/80 transition-colors">
                         <div className="text-xs text-zinc-400 font-medium uppercase tracking-wider mb-2">Total Budget</div>
-                        <div className="text-2xl font-bold text-white tracking-tight">
+                        <div className="text-xl sm:text-2xl font-bold text-white tracking-tight whitespace-nowrap overflow-x-auto no-scrollbar pb-1">
                             {formatCurrency(totalBudget, term.currency)}
                         </div>
                     </div>
@@ -87,9 +87,9 @@ export function Dashboard({ term, expenses, categories }: DashboardProps) {
                         <div className="text-xs font-medium uppercase tracking-wider mb-2 opacity-80">
                             Remaining
                         </div>
-                        <div className="text-2xl font-bold tracking-tight flex items-center gap-2">
-                            {formatCurrency(Math.abs(remaining), term.currency)}
-                            {isOverspent ? <TrendingDown className="w-5 h-5" /> : <TrendingUp className="w-5 h-5" />}
+                        <div className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 whitespace-nowrap overflow-x-auto no-scrollbar pb-1">
+                            <span>{formatCurrency(Math.abs(remaining), term.currency)}</span>
+                            {isOverspent ? <TrendingDown className="w-5 h-5 shrink-0" /> : <TrendingUp className="w-5 h-5 shrink-0" />}
                         </div>
                     </div>
                 </div>

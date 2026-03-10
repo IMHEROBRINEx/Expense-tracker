@@ -30,7 +30,7 @@ export function ExpenseList({ expenses, categories, activeCurrency, onDelete }: 
 
     return (
         <div className="glass-card hover:border-white/10 transition-colors duration-300 overflow-hidden mt-6">
-            <div className="px-6 py-5 border-b border-white/5 bg-surface/30 flex justify-between items-center">
+            <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-white/5 bg-surface/30 flex justify-between items-center">
                 <h3 className="font-semibold text-zinc-100 tracking-wide text-sm uppercase">Recent Expenses</h3>
                 <span className="text-xs font-bold text-primary-light bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
                     {expenses.length} Total
@@ -44,7 +44,7 @@ export function ExpenseList({ expenses, categories, activeCurrency, onDelete }: 
                     return (
                         <div key={expense.id} className="transition-all duration-200 hover:bg-white/[0.02]">
                             <div
-                                className="px-6 py-5 flex items-center justify-between cursor-pointer group"
+                                className="px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between cursor-pointer group"
                                 onClick={() => setExpandedId(isExpanded ? null : expense.id)}
                             >
                                 <div className="flex items-center gap-4">
@@ -56,7 +56,7 @@ export function ExpenseList({ expenses, categories, activeCurrency, onDelete }: 
                                         {expense.type === 'cash' ? <Wallet className="w-5 h-5" /> : <CreditCard className="w-5 h-5" />}
                                     </div>
                                     <div>
-                                        <div className="font-bold text-zinc-100 flex items-center gap-2 group-hover:text-white transition-colors">
+                                        <div className="font-bold text-zinc-100 flex items-center gap-2 group-hover:text-white transition-colors text-sm sm:text-base line-clamp-1">
                                             {getCategoryName(expense.categoryId)}
                                         </div>
                                         <div className="text-sm text-zinc-500 flex items-center gap-2 mt-1 font-medium">
@@ -69,9 +69,9 @@ export function ExpenseList({ expenses, categories, activeCurrency, onDelete }: 
                                     </div>
                                 </div>
 
-                                <div className="flex items-center gap-5">
-                                    <div className="text-right">
-                                        <span className="font-bold text-white block text-lg tracking-tight">
+                                <div className="flex items-center gap-3 sm:gap-5">
+                                    <div className="text-right flex-shrink max-w-[120px] sm:max-w-[200px] overflow-x-auto no-scrollbar pb-1">
+                                        <span className="font-bold text-white block text-base sm:text-lg tracking-tight whitespace-nowrap">
                                             {formatCurrency(expense.amount, activeCurrency)}
                                         </span>
                                     </div>
@@ -83,7 +83,7 @@ export function ExpenseList({ expenses, categories, activeCurrency, onDelete }: 
 
                             {/* Expanded Area with Animation */}
                             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <div className="px-6 pb-5 pt-2 bg-black/20 border-t border-white/5 flex flex-col gap-4">
+                                <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-2 bg-black/20 border-t border-white/5 flex flex-col gap-4">
                                     {expense.note && (
                                         <div className="text-sm text-zinc-300 leading-relaxed bg-surface/50 p-4 rounded-xl border border-white/5">
                                             <span className="font-semibold text-zinc-500 block mb-1.5 uppercase tracking-wider text-xs">Note</span>

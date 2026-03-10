@@ -120,7 +120,7 @@ export function CategoryManager({
                                         </div>
 
                                         {!category.isDefault && (
-                                            <div className="flex gap-2 bg-surface rounded-lg p-1 border border-white/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <div className="flex gap-2 bg-surface rounded-lg p-1 border border-white/5 opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() => {
                                                         setEditingId(category.id);

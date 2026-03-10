@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { SUPPORTED_CURRENCIES, CURRENCY_CODES } from '../utils/currencyUtils';
 import { ChevronDown, Check } from 'lucide-react';
 
@@ -9,22 +9,11 @@ interface CurrencySelectorProps {
 
 export function CurrencySelector({ value, onChange }: CurrencySelectorProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const currentCurrency = SUPPORTED_CURRENCIES[value] || SUPPORTED_CURRENCIES['USD'];
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
     return (
-        <div className="relative z-50" ref={dropdownRef}>
+        <div className="relative z-50">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-2 px-3 py-2 bg-surface/50 border border-white/10 rounded-xl hover:bg-surface hover:border-white/20 transition-all duration-300 shadow-inner group active:scale-95"
@@ -36,8 +25,16 @@ export function CurrencySelector({ value, onChange }: CurrencySelectorProps) {
                 <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
+            {/* Invisible backdrop for mobile touch closing */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 z-40 cursor-default"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+
             {/* Dropdown Menu */}
-            <div className={`absolute right-0 mt-2 w-56 glass-card bg-surface/90 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden origin-top-right transition-all duration-300
+            <div className={`absolute right-0 mt-2 w-56 glass-card bg-surface/90 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden origin-top-right transition-all duration-300 z-50
                 ${isOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}
             `}>
                 <div className="max-h-[300px] overflow-y-auto custom-scrollbar p-2 space-y-1">

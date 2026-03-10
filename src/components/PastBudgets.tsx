@@ -254,12 +254,12 @@ export function PastBudgets({ terms, expenses, categories, activeTerm, onClose }
                         <div className="glass-card p-5 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                             <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2 relative z-10">Budget Set</div>
-                            <div className="text-3xl font-bold text-white tracking-tight relative z-10">{formatCurrency(selectedTerm.budget, selectedTerm.currency)}</div>
+                            <div className="text-3xl font-bold text-white tracking-tight relative z-10 whitespace-nowrap overflow-x-auto no-scrollbar pb-1">{formatCurrency(selectedTerm.budget, selectedTerm.currency)}</div>
                         </div>
 
                         <div className="glass-card p-5 relative overflow-hidden">
                             <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2 relative z-10">Total Spent</div>
-                            <div className="text-3xl font-bold text-white tracking-tight relative z-10">{formatCurrency(totalSpent, selectedTerm.currency)}</div>
+                            <div className="text-3xl font-bold text-white tracking-tight relative z-10 whitespace-nowrap overflow-x-auto no-scrollbar pb-1">{formatCurrency(totalSpent, selectedTerm.currency)}</div>
                             <div className="mt-3 w-full bg-surface-card rounded-full h-1.5 overflow-hidden">
                                 <div className={`h-full rounded-full ${isOverspent ? 'bg-negative' : 'bg-primary'}`} style={{ width: `${percentUsed}%` }}></div>
                             </div>
@@ -270,7 +270,7 @@ export function PastBudgets({ terms, expenses, categories, activeTerm, onClose }
                             <div className={`text-xs font-semibold uppercase tracking-wider mb-2 relative z-10 ${isOverspent ? 'text-negative/70' : 'text-positive/70'}`}>
                                 {isOverspent ? 'Overspent By' : 'Remaining'}
                             </div>
-                            <div className={`text-3xl font-bold tracking-tight relative z-10 ${isOverspent ? 'text-negative' : 'text-positive'}`}>
+                            <div className={`text-3xl font-bold tracking-tight relative z-10 whitespace-nowrap overflow-x-auto no-scrollbar pb-1 ${isOverspent ? 'text-negative' : 'text-positive'}`}>
                                 {formatCurrency(Math.abs(remaining), selectedTerm.currency)}
                             </div>
                         </div>
