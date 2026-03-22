@@ -1,6 +1,7 @@
 import { useLocalStorage } from './useLocalStorage';
 import type { Term, Expense, Category } from '../types';
 import { getEndOfMonth } from '../utils/dateUtils';
+import { generateId } from '../utils/idUtils';
 
 const DEFAULT_CATEGORIES: Category[] = [
     { id: 'cat-food', name: 'Food', isDefault: true },
@@ -25,7 +26,7 @@ export function useExpenseTracker() {
     const startNewTerm = (startDate: string, budget: number) => {
         const endDate = getEndOfMonth(startDate);
         const newTerm: Term = {
-            id: crypto.randomUUID(),
+            id: generateId(),
             startDate,
             endDate,
             budget,
@@ -61,7 +62,7 @@ export function useExpenseTracker() {
         if (!activeTermId) return;
         const newExpense: Expense = {
             ...expenseData,
-            id: crypto.randomUUID(),
+            id: generateId(),
             termId: activeTermId,
         };
         // Keep sorted by date descending mostly
@@ -98,7 +99,7 @@ export function useExpenseTracker() {
 
     const addCategory = (name: string) => {
         const newCategory: Category = {
-            id: `cat-${crypto.randomUUID()}`,
+            id: `cat-${generateId()}`,
             name,
             isDefault: false
         };

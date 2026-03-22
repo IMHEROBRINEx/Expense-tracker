@@ -13,16 +13,16 @@ export function CurrencySelector({ value, onChange }: CurrencySelectorProps) {
     const currentCurrency = SUPPORTED_CURRENCIES[value] || SUPPORTED_CURRENCIES['USD'];
 
     return (
-        <div className="relative z-50">
+        <div className="relative z-50 shrink-0">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 px-3 py-2 bg-surface/50 border border-white/10 rounded-xl hover:bg-surface hover:border-white/20 transition-all duration-300 shadow-inner group active:scale-95"
+                className="flex items-center gap-1.5 px-2 py-2 bg-surface/50 border border-white/10 rounded-xl hover:bg-surface hover:border-white/20 transition-all duration-300 shadow-inner group active:scale-95"
             >
-                <span className="text-lg leading-none">{currentCurrency.flag}</span>
+                <span className="text-base leading-none">{currentCurrency.flag}</span>
                 <span className="text-sm font-bold text-zinc-200 group-hover:text-white transition-colors">
                     {currentCurrency.code}
                 </span>
-                <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3 h-3 text-zinc-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {/* Invisible backdrop for mobile touch closing */}
@@ -34,7 +34,7 @@ export function CurrencySelector({ value, onChange }: CurrencySelectorProps) {
             )}
 
             {/* Dropdown Menu */}
-            <div className={`absolute right-0 mt-2 w-56 glass-card bg-surface/90 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden origin-top-right transition-all duration-300 z-50
+            <div className={`!absolute top-full right-0 mt-2 w-56 glass-card bg-surface/90 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden origin-top-right transition-all duration-300 z-50
                 ${isOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}
             `}>
                 <div className="max-h-[300px] overflow-y-auto custom-scrollbar p-2 space-y-1">

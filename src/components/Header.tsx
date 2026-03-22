@@ -1,6 +1,5 @@
 import type { Term } from '../types';
-import { formatDateDisplay } from '../utils/dateUtils';
-import { Calendar, PlusCircle, Settings, Wallet, Tags, History } from 'lucide-react';
+import { PlusCircle, Settings, Wallet, Tags, History } from 'lucide-react';
 import { CurrencySelector } from './CurrencySelector';
 
 interface HeaderProps {
@@ -22,85 +21,75 @@ export function Header({
     onManageTerms,
     onManageCategories,
     onOpenPastBudgets,
-    onEndTerm
 }: HeaderProps) {
     return (
-        <header className="bg-surface/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5 sticky top-0 z-40 px-4 sm:px-6 shrink-0 w-full overflow-visible block pt-[calc(env(safe-area-inset-top)+1rem)] pb-4">
-            <div className="max-w-6xl mx-auto flex flex-row flex-nowrap justify-between items-center gap-4 w-full h-[40px]">
+        <header className="bg-surface/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5 sticky top-0 z-40 px-4 sm:px-6 shrink-0 w-full overflow-visible pt-[env(safe-area-inset-top)] pb-0">
+            <div className="max-w-6xl mx-auto flex flex-row flex-nowrap items-center justify-between gap-2 w-full h-12">
 
                 {/* Logo / App Name */}
-                <div className="flex flex-row items-center gap-3 text-primary group cursor-pointer hover:opacity-90 transition-opacity whitespace-nowrap shrink-0">
-                    <div className="bg-primary/10 p-2 rounded-xl border border-primary/20 shadow-[0_0_15px_rgba(79,140,255,0.15)]">
-                        <Wallet className="w-6 h-6 text-primary" />
+                <div className="flex flex-row items-center gap-2 text-primary shrink-0 min-w-0">
+                    <div className="bg-primary/10 p-1.5 rounded-lg border border-primary/20 shrink-0">
+                        <Wallet className="w-4 h-4 text-primary" />
                     </div>
-                    <h1 className="text-xl font-bold tracking-tight text-white group-hover:text-primary-light transition-colors hidden sm:block">
-                        Budget Tracker
-                    </h1>
+                    <span className="text-sm font-bold tracking-tight text-white whitespace-nowrap">
+                        Expense Tracker
+                    </span>
                 </div>
 
-                {/* Active Term Display & Actions */}
-                <div className="flex flex-row flex-nowrap items-center gap-2 sm:gap-3 flex-1 overflow-x-auto no-scrollbar ml-auto pb-1 justify-start md:justify-end">
+                {/* Action Icons */}
+                <div className="flex flex-row flex-nowrap items-center justify-end gap-1 flex-1 min-w-0">
 
-                    {/* Top Right Utilities (Currency & Past Budgets) */}
-                    <div className="flex items-center gap-2 border-r border-white/10 pr-2 sm:pr-3 shrink-0">
+                    {/* Scrollable middle actions */}
+                    <div className="flex flex-row flex-nowrap items-center justify-end gap-1 overflow-x-auto no-scrollbar shrink">
+                        {/* Past Budgets */}
+                        <button
+                            onClick={onOpenPastBudgets}
+                            className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 active:scale-95 transition-all shrink-0"
+                            title="Past Budgets"
+                        >
+                            <History className="w-4 h-4" />
+                        </button>
+
+                        {activeTerm && (
+                            <>
+                                {/* Manage Categories */}
+                                <button
+                                    onClick={onManageCategories}
+                                    className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 active:scale-95 transition-all shrink-0"
+                                    title="Manage Categories"
+                                >
+                                    <Tags className="w-4 h-4" />
+                                </button>
+
+                                {/* Manage Terms */}
+                                <button
+                                    onClick={onManageTerms}
+                                    className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 active:scale-95 transition-all shrink-0"
+                                    title="Manage Terms"
+                                >
+                                    <Settings className="w-4 h-4" />
+                                </button>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Pinned essential actions (Not scrollable) */}
+                    <div className="flex flex-row items-center gap-1 shrink-0 relative">
+                        {/* Currency Selector */}
                         <CurrencySelector
                             value={globalCurrency}
                             onChange={onUpdateCurrency}
                         />
+
+                        {/* Start / New Term */}
                         <button
-                            onClick={onOpenPastBudgets}
-                            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-surface/50 border border-white/10 rounded-xl hover:bg-surface hover:border-white/20 transition-all duration-300 shadow-inner group active:scale-95 text-zinc-300 hover:text-white shrink-0"
-                            title="View Past Budgets"
+                            onClick={onStartNew}
+                            className="flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-light text-white px-3 py-1.5 rounded-xl font-medium transition-all shadow-[0_4px_14px_rgba(79,140,255,0.39)] active:scale-95 whitespace-nowrap shrink-0 text-sm"
                         >
-                            <History className="w-4 h-4 text-zinc-500 group-hover:text-primary-light transition-colors" />
-                            <span className="text-sm font-bold hidden md:block">Past Budgets</span>
+                            <PlusCircle className="w-4 h-4" />
+                            <span className="hidden sm:inline">Start Term</span>
                         </button>
                     </div>
-
-                    {activeTerm ? (
-                        <div className="flex flex-row items-center gap-2 sm:gap-3 shrink-0">
-                            <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary-light rounded-full text-sm font-medium border border-primary/20 shadow-[0_0_15px_rgba(79,140,255,0.1)] whitespace-nowrap">
-                                <Calendar className="w-4 h-4" />
-                                <span>
-                                    {formatDateDisplay(activeTerm.startDate)} – {formatDateDisplay(activeTerm.endDate)}
-                                </span>
-                            </div>
-
-                            <button
-                                onClick={onEndTerm}
-                                className="flex items-center gap-2 px-3 py-2 bg-negative/10 border border-negative/20 text-negative hover:bg-negative hover:text-white rounded-xl transition-all duration-300 active:scale-95 group text-sm font-bold shadow-inner shrink-0"
-                                title="End active term immediately"
-                            >
-                                <History className="w-4 h-4" />
-                                <span className="hidden md:inline">End Month</span>
-                            </button>
-
-                            <div className="flex items-center gap-1 border-r border-white/10 pr-2 sm:pr-3 shrink-0">
-                                <button
-                                    onClick={onManageCategories}
-                                    className="text-zinc-400 hover:text-white transition-all p-2.5 rounded-xl hover:bg-white/5 active:scale-95 flex items-center justify-center shrink-0"
-                                    title="Manage Categories"
-                                >
-                                    <Tags className="w-5 h-5" />
-                                </button>
-                                <button
-                                    onClick={onManageTerms}
-                                    className="text-zinc-400 hover:text-white transition-all p-2.5 rounded-xl hover:bg-white/5 active:scale-95 flex items-center justify-center shrink-0"
-                                    title="Manage Terms"
-                                >
-                                    <Settings className="w-5 h-5" />
-                                </button>
-                            </div>
-                        </div>
-                    ) : null}
-
-                    <button
-                        onClick={onStartNew}
-                        className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white px-4 sm:px-5 py-2.5 rounded-xl font-medium transition-all shadow-[0_4px_14px_rgba(79,140,255,0.39)] hover:shadow-[0_6px_20px_rgba(79,140,255,0.45)] hover:-translate-y-0.5 active:scale-95 whitespace-nowrap shrink-0"
-                    >
-                        <PlusCircle className="w-5 h-5" />
-                        <span className="hidden sm:inline">Start Term</span>
-                    </button>
                 </div>
 
             </div>

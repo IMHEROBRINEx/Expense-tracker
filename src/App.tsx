@@ -53,7 +53,7 @@ function App() {
   const isInitialSetup = !activeTerm && !showTermSetup && terms.length === 0;
 
   return (
-    <div className="min-h-screen bg-transparent flex flex-col font-sans text-zinc-100 overflow-x-hidden relative">
+    <div className="min-h-screen bg-transparent flex flex-col font-sans text-zinc-100 overflow-x-hidden relative pb-[env(safe-area-inset-bottom)]">
       <Header
         activeTerm={activeTerm}
         globalCurrency={globalCurrency}
