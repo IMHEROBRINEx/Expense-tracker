@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import type { Term } from '../types';
-import { PlusCircle, Settings, Wallet, Tags, History } from 'lucide-react';
+import { PlusCircle, Settings, Wallet, Tags, History, Menu, X } from 'lucide-react';
 import { CurrencySelector } from './CurrencySelector';
 
 interface HeaderProps {
@@ -22,76 +23,83 @@ export function Header({
     onManageCategories,
     onOpenPastBudgets,
 }: HeaderProps) {
-    return (
-        <header className="bg-surface/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5 sticky top-0 z-40 px-4 sm:px-6 shrink-0 w-full overflow-visible pt-[env(safe-area-inset-top)] pb-0">
-            <div className="max-w-6xl mx-auto flex flex-row flex-nowrap items-center justify-between gap-2 w-full h-12">
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-                {/* Logo / App Name */}
-                <div className="flex flex-row items-center gap-2 text-primary shrink-0 min-w-0">
-                    <div className="bg-primary/10 p-1.5 rounded-lg border border-primary/20 shrink-0">
-                        <Wallet className="w-4 h-4 text-primary" />
+    return (
+        <header className="bg-surface/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5 sticky top-0 z-40 px-0 sm:px-6 shrink-0 w-full pt-[env(safe-area-inset-top)] pb-0">
+            <div className="max-w-6xl mx-auto flex flex-col relative w-full">
+                <div className="flex flex-row flex-nowrap items-center justify-between gap-2 w-full h-14 sm:h-12 px-4 sm:px-0">
+                    
+                    {/* Logo / App Name */}
+                    <div className="flex flex-row items-center gap-2 text-primary shrink-0 min-w-0">
+                        <div className="bg-primary/10 p-1.5 rounded-lg border border-primary/20 shrink-0">
+                            <Wallet className="w-5 h-5 sm:w-4 sm:h-4 text-primary" />
+                        </div>
+                        <span className="text-base sm:text-sm font-bold tracking-tight text-white whitespace-nowrap">
+                            Expense Tracker
+                        </span>
                     </div>
-                    <span className="text-sm font-bold tracking-tight text-white whitespace-nowrap">
-                        Expense Tracker
-                    </span>
+
+                    {/* Action Icons */}
+                    <div className="flex flex-row items-center justify-end flex-1 gap-2 shrink-0">
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className={`p-2 rounded-xl transition-all shrink-0 ${isMenuOpen ? 'text-white bg-white/10' : 'text-zinc-300 bg-white/5'} active:scale-95`}
+                        >
+                            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                        </button>
+                    </div>
                 </div>
 
-                {/* Action Icons */}
-                <div className="flex flex-row flex-nowrap items-center justify-end gap-1 flex-1 min-w-0">
-
-                    {/* Scrollable middle actions */}
-                    <div className="flex flex-row flex-nowrap items-center justify-end gap-1 overflow-x-auto no-scrollbar shrink">
-                        {/* Past Budgets */}
-                        <button
-                            onClick={onOpenPastBudgets}
-                            className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 active:scale-95 transition-all shrink-0"
-                            title="Past Budgets"
+                {/* Dropdown Menu */}
+                {isMenuOpen && (
+                    <div className="absolute top-full left-0 sm:left-auto sm:right-4 right-0 w-full sm:w-80 sm:mt-2 sm:rounded-2xl sm:border sm:border-white/10 bg-surface/95 backdrop-blur-xl border-b border-white/5 p-4 flex flex-col gap-2 shadow-2xl z-50 animate-in slide-in-from-top-2 fade-in duration-200">
+                        <button 
+                            onClick={() => { onStartNew(); setIsMenuOpen(false); }} 
+                            className="flex items-center gap-3 w-full p-3 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 active:scale-[0.98] transition-all text-left border border-primary/20"
                         >
-                            <History className="w-4 h-4" />
+                            <div className="bg-primary p-2 rounded-lg">
+                                <PlusCircle className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="font-bold text-sm">Start New Term</span>
                         </button>
 
+                        <div className="h-px bg-white/5 my-1" />
+
+                        <div className="flex items-center justify-between px-3 py-2">
+                            <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Currency</span>
+                            <div className="z-50 relative">
+                                <CurrencySelector value={globalCurrency} onChange={onUpdateCurrency} />
+                            </div>
+                        </div>
+                        
+                        <div className="h-px bg-white/5 my-1" />
+                        
+                        <button onClick={() => { onOpenPastBudgets(); setIsMenuOpen(false); }} className="flex items-center gap-3 w-full p-3 rounded-xl text-zinc-300 hover:bg-white/5 hover:text-white active:scale-[0.98] transition-all text-left">
+                            <div className="bg-white/5 p-2 rounded-lg">
+                                <History className="w-4 h-4" />
+                            </div>
+                            <span className="font-medium text-sm">Past Budgets</span>
+                        </button>
+                        
                         {activeTerm && (
                             <>
-                                {/* Manage Categories */}
-                                <button
-                                    onClick={onManageCategories}
-                                    className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 active:scale-95 transition-all shrink-0"
-                                    title="Manage Categories"
-                                >
-                                    <Tags className="w-4 h-4" />
+                                <button onClick={() => { onManageCategories(); setIsMenuOpen(false); }} className="flex items-center gap-3 w-full p-3 rounded-xl text-zinc-300 hover:bg-white/5 hover:text-white active:scale-[0.98] transition-all text-left">
+                                    <div className="bg-white/5 p-2 rounded-lg">
+                                        <Tags className="w-4 h-4" />
+                                    </div>
+                                    <span className="font-medium text-sm">Manage Categories</span>
                                 </button>
-
-                                {/* Manage Terms */}
-                                <button
-                                    onClick={onManageTerms}
-                                    className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 active:scale-95 transition-all shrink-0"
-                                    title="Manage Terms"
-                                >
-                                    <Settings className="w-4 h-4" />
+                                <button onClick={() => { onManageTerms(); setIsMenuOpen(false); }} className="flex items-center gap-3 w-full p-3 rounded-xl text-zinc-300 hover:bg-white/5 hover:text-white active:scale-[0.98] transition-all text-left">
+                                    <div className="bg-white/5 p-2 rounded-lg">
+                                        <Settings className="w-4 h-4" />
+                                    </div>
+                                    <span className="font-medium text-sm">Manage Terms</span>
                                 </button>
                             </>
                         )}
                     </div>
-
-                    {/* Pinned essential actions (Not scrollable) */}
-                    <div className="flex flex-row items-center gap-1 shrink-0 relative">
-                        {/* Currency Selector */}
-                        <CurrencySelector
-                            value={globalCurrency}
-                            onChange={onUpdateCurrency}
-                        />
-
-                        {/* Start / New Term */}
-                        <button
-                            onClick={onStartNew}
-                            className="flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-light text-white px-3 py-1.5 rounded-xl font-medium transition-all shadow-[0_4px_14px_rgba(79,140,255,0.39)] active:scale-95 whitespace-nowrap shrink-0 text-sm"
-                        >
-                            <PlusCircle className="w-4 h-4" />
-                            <span className="hidden sm:inline">Start Term</span>
-                        </button>
-                    </div>
-                </div>
-
+                )}
             </div>
         </header>
     );
