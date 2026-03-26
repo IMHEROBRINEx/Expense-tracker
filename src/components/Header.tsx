@@ -98,6 +98,34 @@ export function Header({
                                 </button>
                             </>
                         )}
+
+                        <div className="h-px bg-white/5 my-1 sm:hidden" />
+
+                        <a 
+                            href="https://docs.google.com/forms/d/e/1FAIpQLSddxPs-pf6RIicSDYOHUumbcB2_H7jqotIUPxSsA17jKJt5_w/viewform?usp=publish-editor" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="sm:hidden flex items-center gap-3 w-full p-3 rounded-xl bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 active:scale-[0.98] transition-all text-left border border-amber-500/20"
+                        >
+                            <div className="bg-amber-500/20 flex items-center justify-center w-8 h-8 rounded-lg shrink-0">
+                                <span className="text-base leading-none">🐛</span>
+                            </div>
+                            <span className="font-bold text-sm">Report a bug</span>
+                        </a>
+
+                        <a 
+                            href="https://github.com/IMHEROBRINEx/Expense-tracker" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="sm:hidden flex items-center gap-3 w-full p-3 rounded-xl bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 active:scale-[0.98] transition-all text-left border border-rose-500/20"
+                        >
+                            <div className="bg-rose-500/20 flex items-center justify-center w-8 h-8 rounded-lg shrink-0">
+                                <span className="text-base leading-none">❤️</span>
+                            </div>
+                            <span className="font-bold text-sm">Contribute</span>
+                        </a>
                     </div>
                 )}
             </div>
