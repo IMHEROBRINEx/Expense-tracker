@@ -115,7 +115,7 @@ export function Header({
                         </a>
 
                         <a 
-                            href="https://github.com/IMHEROBRINEx/Expense-tracker" 
+                            href="https://github.com/IMHEROBRINEx/Stash" 
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => setIsMenuOpen(false)}
